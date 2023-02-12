@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getProducts } from '../api/firebase';
+import Banner from '../components/Banner';
+import Products from '../components/Products';
 
 const Home = () => {
-  return <div>Home</div>;
+  const [products, setProducts] = useState({});
+
+  useEffect(() => {
+    getProducts().then(setProducts);
+  }, []);
+
+  return (
+    <>
+      <Banner />
+      <Products />
+    </>
+  );
 };
 
 export default Home;

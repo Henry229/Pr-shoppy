@@ -6,6 +6,8 @@ import CButton from '../components/ui/CButton';
 const NewProduct = () => {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
+  const [isUploading, setIsUploading] = useState(false);
+  const [success, setSuccess] = useState();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -18,18 +20,39 @@ const NewProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsUploading(true);
     Uploader(file).then((url) => {
       console.log(url);
-      addNewProduct(product, url);
+      addNewProduct(product, url)
+        .then(() => {
+          setSuccess('✅ added product successfully');
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+          setIsUploading(false);
+        })
+        .finally(() => setIsUploading(false));
+      setProduct({});
     });
   };
 
   return (
-    <section>
-      <h2>Register New Products</h2>
+    <section className='w-full text-center mb-4'>
+      <h2 className='text-2xl font-bold my-4 '>Register New Products</h2>
       {/* 👍👍👍 */}
-      {file && <img src={URL.createObjectURL(file)} alt='' />}
-      <form onSubmit={handleSubmit}>
+      {success && (
+        <p className='text-md font-bold text-green-600 items-center pb-2'>
+          {success}
+        </p>
+      )}
+      {file && (
+        <img
+          className='w-96 mx-auto mb-4 rounded-lg shadow-md'
+          src={URL.createObjectURL(file)}
+          alt=''
+        />
+      )}
+      <form className='flex flex-col px-12 mb-6' onSubmit={handleSubmit}>
         <input
           type='file'
           accept='images/*'

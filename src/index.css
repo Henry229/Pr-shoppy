@@ -12,5 +12,5 @@ body {
 }
 
 input {
-  @apply p-4 outline-none border border-gray-300 my-1;
+  @apply p-4 outline-none rounded-sm shadow-md border border-gray-300 my-1;
 }
