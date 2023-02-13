@@ -4,11 +4,11 @@ import Banner from '../components/Banner';
 import Products from '../components/Products';
 
 const Home = () => {
-  const [products, setProducts] = useState({});
+  // const [products, setProducts] = useState({});
 
-  useEffect(() => {
-    getProducts().then(setProducts);
-  }, []);
+  // useEffect(() => {
+  //   getProducts().then(setProducts);
+  // }, []);
 
   return (
     <>

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { addNewProduct } from '../api/firebase';
+// import { addNewProduct } from '../api/firebase';
 import { Uploader } from '../api/Uploader';
 import CButton from '../components/ui/CButton';
+import useProducts from '../hooks/useProducts';
 
 const NewProduct = () => {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
   const [isUploading, setIsUploading] = useState(false);
   const [success, setSuccess] = useState();
+  const { addProduct } = useProducts();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -21,19 +23,22 @@ const NewProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
-    Uploader(file).then((url) => {
-      console.log(url);
-      addNewProduct(product, url)
-        .then(() => {
-          setSuccess('✅ added product successfully');
-          setTimeout(() => {
-            setSuccess(null);
-          }, 4000);
-          setIsUploading(false);
-        })
-        .finally(() => setIsUploading(false));
-      setProduct({});
-    });
+    Uploader(file) //
+      .then((url) => {
+        addProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess('✅ added product successfully');
+              setTimeout(() => {
+                setSuccess(null);
+              }, 4000);
+            },
+          }
+        );
+      })
+      .finally(() => setIsUploading(false));
+    setProduct({});
   };
 
   return (
@@ -100,7 +105,10 @@ const NewProduct = () => {
           required
           onChange={handleChange}
         />
-        <CButton text={'Register Product'} />
+        <CButton
+          text={isUploading ? 'Uploading...' : 'Register Product'}
+          disabled={isUploading}
+        />
       </form>
     </section>
   );

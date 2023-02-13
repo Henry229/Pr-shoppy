@@ -76,3 +76,24 @@ export async function getProducts() {
     })
     .catch(console.error);
 }
+
+export async function getCart(uid) {
+  return get(ref(database, `carts/${uid}`)) //
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log('<<<-- getCart: ', Object.values(snapshot.val()));
+        return Object.values(snapshot.val());
+      }
+      return [];
+    })
+    .catch(console.error);
+}
+
+export async function addOrUpdateToCart(uid, product) {
+  console.log('--> update', uid, '//', product);
+  return set(ref(database, `carts/${uid}/${product.id}`), product);
+}
+
+export async function removeFromCart(uid, productId) {
+  return remove(ref(database, `carts/${uid}/${productId}`));
+}

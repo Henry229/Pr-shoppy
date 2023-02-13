@@ -4,6 +4,7 @@ import { BsFillPencilFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { login, logout, onUserStateChange } from '../api/firebase';
 import { useAuthContext } from '../context/AuthContext';
+import CartStatus from './CartStatus';
 import CButton from './ui/CButton';
 import User from './User';
 
@@ -36,7 +37,11 @@ const NavBar = () => {
       </Link>
       <section className='flex items-center gap-4 font-semibold'>
         <Link to='/products'>Products</Link>
-        {user && <Link to='/carts'>Cart</Link>}
+        {user && (
+          <Link to='/carts'>
+            <CartStatus />
+          </Link>
+        )}
         {user && user.isAdmin && (
           <Link to='/products/new'>
             <BsFillPencilFill />
