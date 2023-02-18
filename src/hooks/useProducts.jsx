@@ -1,8 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addNewProduct, getProducts } from '../api/firebase';
+import { addNewProduct } from '../api/firebase';
+import { getProducts } from '../api/axios';
+// import { useAuthContext } from '../context/AuthContext';
 
 export default function useProducts() {
   const queryClient = useQueryClient();
+  // const shoppyAxios = new ShoppyAxios();
 
   const productsQuery = useQuery(['products'], getProducts, {
     staleTime: 1000 * 60,

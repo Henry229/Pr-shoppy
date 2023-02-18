@@ -70,6 +70,7 @@ export async function getProducts() {
   return get(ref(database, 'products')) //
     .then((snapshot) => {
       if (snapshot.exists()) {
+        console.log('--<>---', snapshot.val());
         return Object.values(snapshot.val());
       }
       return [];
