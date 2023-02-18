@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { addNewProduct } from '../api/firebase';
-import { getProducts } from '../api/axios';
+// import { addNewProduct } from '../api/firebase';
+import { getProducts, addNewProduct } from '../api/axios';
 // import { useAuthContext } from '../context/AuthContext';
 
 export default function useProducts() {

@@ -1,17 +1,24 @@
 import axios from 'axios';
 
-// export default class ShoppyAxios {
-//   constructor() {
-//     this.httpClient = axios.create({
-//       baseURL: 'http://localhost:4001/',
-//     });
-//   }
-// }
-
 export async function getProducts() {
-  return axios.get('http://localhost:4001/products').then((response) => {
-    console.log(response);
-    // console.log(Object.values(response.data));
-    return response.data;
-  });
+  return axios
+    .get('http://localhost:4001/products') //
+    .then((response) => {
+      return response.data;
+    });
+}
+
+export async function addNewProduct(product, image) {
+  return axios
+    .post(`http://localhost:4001/products/${product._id}`, {
+      ...product,
+      // _id,
+      price: parseInt(product.price),
+      image,
+      options: product.options.split(','),
+    }) //
+    .then((response) => {
+      console.log(response);
+      return response;
+    });
 }
