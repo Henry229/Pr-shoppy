@@ -18,10 +18,12 @@ const MyCart = () => {
   //   getCart(user.uid).then((res) => setCartItem(res));
   // }, []);
   const {
-    cartQuery: { isLoading, data: products },
+    cartQuery: { isLoading, error, data: products },
   } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+  console.log('@@@> MyCart', products);
 
   const hasProducts = products && products.length > 0;
   const totalPrice =
@@ -38,7 +40,9 @@ const MyCart = () => {
         <>
           <ul className='border-b border-gray-300 mb-8 p-4 px-8'>
             {products &&
-              products.map((item) => <CartItem key={item.id} product={item} />)}
+              products.map((item) => (
+                <CartItem key={item._id} product={item} />
+              ))}
           </ul>
           <div className='flex justify-between items-center mb-6 px-2 md:px-8 lg:px-6'>
             <PriceCard text='Total Price' price={totalPrice} />

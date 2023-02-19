@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 // import { addOrUpdateToCart } from '../api/firebase';
 import CButton from '../components/ui/CButton';
+import { useAuthContext } from '../context/AuthContext';
 // import { useAuthContext } from '../context/AuthContext';
 import useCart from '../hooks/useCart';
 
 const ProductDetail = () => {
+  const { uid } = useAuthContext();
   const { addOrUpdateItem } = useCart();
   const {
     state: {
-      product: { id, image, title, description, category, price, options },
+      product: { _id: id, image, title, description, category, price, options },
     },
   } = useLocation();
 
@@ -29,6 +31,8 @@ const ProductDetail = () => {
       price,
       options: selected,
       quantity: 1,
+      uid,
+      productId: id,
     };
     // console.log('<<<', user, '/', product);
     addOrUpdateItem.mutate(product, {

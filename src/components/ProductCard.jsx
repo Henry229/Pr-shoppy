@@ -6,6 +6,7 @@ const ProductCard = ({
   product: { _id: id, image, title, category, price },
 }) => {
   const navigate = useNavigate();
+  console.log('--<> in ProductCard: ', product);
   return (
     <li
       className='rounded-lg shadow-md overflow-hidden cursor-pointer transition-all hover:scale-105'
