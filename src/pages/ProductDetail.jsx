@@ -8,7 +8,7 @@ import useCart from '../hooks/useCart';
 
 const ProductDetail = () => {
   const { uid } = useAuthContext();
-  const { addOrUpdateItem } = useCart();
+  const { addItem } = useCart();
   const {
     state: {
       product: { _id: id, image, title, description, category, price, options },
@@ -35,7 +35,7 @@ const ProductDetail = () => {
       productId: id,
     };
     // console.log('<<<', user, '/', product);
-    addOrUpdateItem.mutate(product, {
+    addItem.mutate(product, {
       onSuccess: () => {
         setSuccess('Added to Cart successfully!');
         setTimeout(() => {

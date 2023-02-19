@@ -10,13 +10,13 @@ const CartItem = ({
   product,
   product: { id, title, image, price, options, quantity },
 }) => {
-  const { addOrUpdateItem, removeItem } = useCart();
+  const { updateItem, removeItem } = useCart();
   const handleMinus = () => {
     if (quantity < 2) return;
-    addOrUpdateItem.mutate({ ...product, quantity: quantity - 1 });
+    updateItem.mutate({ ...product, quantity: quantity - 1 });
   };
   const handlePlus = () => {
-    addOrUpdateItem.mutate({ ...product, quantity: quantity + 1 });
+    updateItem.mutate({ ...product, quantity: quantity + 1 });
   };
   const handleDelete = () => {
     removeItem.mutate(id);
